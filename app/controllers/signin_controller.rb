@@ -7,7 +7,7 @@ class SigninController < ApplicationController
     user = User.find_by(email: params[:email])
 
     if user.authenticate(params[:password])
-      respond_with_credentials_to(user)
+      create_session(user)
     else
       not_found
     end

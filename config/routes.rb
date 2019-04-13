@@ -7,10 +7,10 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'signup', to: 'signup#create'
   get 'signin', to: 'signin#create'
-  get 'logout', to: 'signin#destroy'
   get 'refresh', to: 'refresh#create'
+  post 'signup', to: 'signup#create'
+  delete 'logout', to: 'signin#destroy'
 
   root 'home#index'
 end

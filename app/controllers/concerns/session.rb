@@ -17,4 +17,5 @@ module Session
     session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
     tokens = session.login
     respond_with_credentials(tokens)
+  end
 end

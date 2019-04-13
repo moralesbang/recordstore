@@ -5,7 +5,7 @@ class SignupController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      respond_with_credentials_to(user)
+      create_session(user)
     else
       render json: { error: user.errors.full_messages.join(' ') }, status: :unprocessable_entity
     end
