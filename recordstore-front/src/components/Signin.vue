@@ -1,10 +1,10 @@
 <template>
   <div class="max-w-sm m-auto my-8">
     <div class="border p-10 border-grey-light shadow rounded">
-      <h3 class="title">Sign Up</h3>
-      <form @submit.prevent="signup">
+      <h3 class="title">Sign In</h3>
+      <form @submit.prevent="signin">
         <div class="mb-6">
-          <label for="email" class="label">E-amil address</label>
+          <label for="email" class="label">E-mail address</label>
           <input
             type="email"
             v-model="email"
@@ -24,20 +24,7 @@
           />
         </div>
 
-        <div class="mb-6">
-          <label for="passwordConfirmation" class="label"
-            >Password Confirmation</label
-          >
-          <input
-            type="password"
-            v-model="passwordConfirmation"
-            class="input"
-            id="passwordConfirmation"
-            placeholder="Enter again"
-          />
-        </div>
-
-        <button type="submit" class="btn btn--primary">Sign Up</button>
+        <button type="submit" class="btn btn--primary">Sign In</button>
       </form>
     </div>
   </div>
@@ -45,35 +32,27 @@
 
 <script>
 export default {
-  name: 'Signup',
+  name: 'Signin',
   data() {
     return {
       email: '',
       password: '',
-      passwordConfirmation: '',
       error: ''
     }
   },
-  created() {
-    this.checkedSignedIn()
-  },
-  updated() {
-    this.checkedSignedIn()
-  },
   methods: {
-    signup() {
+    signin() {
       this.$http.plain
-        .post('/signup', {
+        .post('/signin', {
           email: this.email,
-          password: this.password,
-          password_confirmation: this.passwordConfirmation
+          password: this.password
         })
-        .then(response => this.signupSuccessful(response))
-        .catch(error => this.signupFailed(error))
+        .then(response => this.signinSucessful(response))
+        .catch(error => this.signinFailed(error))
     },
-    signupSuccessful(response) {
+    signinSucessful(response) {
       if (!response.data.csrf) {
-        this.signupFailed(response)
+        this.signinFailed(response)
         return
       }
 
@@ -82,14 +61,14 @@ export default {
       this.error = ''
       this.$router.replace('/records')
     },
-    signupFailed(error) {
+    signinFailed(error) {
       this.error =
         (error.response && error.response.data && error.response.data.error) ||
-        'Something went wrong'
+        ''
       delete localStorage.csrf
       delete localStorage.signedIn
     },
-    checkedSignedIn() {
+    checkSignedIn() {
       if (localStorage.signedIn) {
         this.$router.replace('/records')
       }
@@ -97,5 +76,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

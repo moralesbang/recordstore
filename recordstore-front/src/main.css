@@ -79,3 +79,15 @@
 .label {
   @apply block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2;
 }
+
+.btn {
+  @apply font-sans font-bold px-4 py-2 rounded cursor-pointer no-underline;
+}
+
+.btn--primary {
+  @apply bg-indigo-dark text-white;
+}
+
+.title {
+  @apply text-2xl mb-6 text-grey-darkest;
+}
