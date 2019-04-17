@@ -33,11 +33,22 @@
 <script>
 export default {
   name: 'Signin',
+  created() {
+    this.checkSignedIn()
+  },
+  updated() {
+    this.checkSignedIn()
+  },
   data() {
     return {
       email: '',
       password: '',
       error: ''
+    }
+  },
+  computed: {
+    signedIn() {
+      return this.$store.state.signedIn
     }
   },
   methods: {
@@ -57,7 +68,8 @@ export default {
       }
 
       localStorage.csrf = response.data.csrf
-      localStorage.signedIn = true
+
+      this.$store.dispatch('toggleSignedIn')
       this.error = ''
       this.$router.replace('/records')
     },
@@ -69,7 +81,8 @@ export default {
       delete localStorage.signedIn
     },
     checkSignedIn() {
-      if (localStorage.signedIn) {
+      console.log('signedIn', this.signedIn)
+      if (this.signedIn) {
         this.$router.replace('/records')
       }
     }
